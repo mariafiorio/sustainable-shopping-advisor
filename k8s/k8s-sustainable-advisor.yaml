@@ -33,6 +33,14 @@ spec:
           value: "http://recommender-agent:5001"
         - name: ONLINE_BOUTIQUE_URL
           value: "http://frontend:80"
+        # Real Online Boutique API connections
+        - name: PRODUCT_CATALOG_URL
+          value: "http://productcatalogservice:3550"
+        - name: CART_SERVICE_URL
+          value: "http://cartservice:7070"
+        - name: CURRENCY_SERVICE_URL
+          value: "http://currencyservice:7000"
+        # Google AI integration
         - name: GOOGLE_API_KEY
           valueFrom:
             secretKeyRef:
