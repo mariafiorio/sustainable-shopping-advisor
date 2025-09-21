@@ -435,3 +435,19 @@ This project was built for the Google Cloud Hackathon 2025, demonstrating how **
 ---
 
 *Built with ❤️ and ☁️ by Maria Fiorio for Google Cloud Hackathon 2025*
+## 🔧 Local Development Setup
+
+### Environment Configuration
+```bash
+# Copy environment template
+cp src/sustainable-advisor/.env.example src/sustainable-advisor/.env
+
+# Edit with your actual API key (keep private!)
+nano src/sustainable-advisor/.env
+```
+
+### Google AI API Setup
+1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Create a new API key
+3. Add to your `.env` file (never commit this file!)
+
