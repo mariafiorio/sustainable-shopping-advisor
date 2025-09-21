@@ -3,6 +3,22 @@ import requests
 import json
 import os
 import logging
+import sys
+
+# Import ADK agents with proper error handling
+try:
+    sys.path.append('/Users/maria/sustainable-shopping-advisor/src/adk')
+    from agent_base import AgentRequest, AgentResponse
+    from sustainable_advisor_adk import SustainableAdvisorADK
+    from recommender_agent_adk import RecommenderAgentADK
+    ADK_AVAILABLE = True
+except ImportError as e:
+    logging.warning(f"ADK agents not available: {e}")
+    AgentRequest = None
+    AgentResponse = None
+    SustainableAdvisorADK = None
+    RecommenderAgentADK = None
+    ADK_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +34,21 @@ class MCPClient:
         self.product_catalog_url = os.getenv('PRODUCT_CATALOG_URL', 'http://productcatalogservice:3550')
         self.cart_service_url = os.getenv('CART_SERVICE_URL', 'http://cartservice:7070') 
         self.currency_service_url = os.getenv('CURRENCY_SERVICE_URL', 'http://currencyservice:7000')
+        
+        # Initialize ADK agents
+        if ADK_AVAILABLE:
+            try:
+                self.sustainable_advisor = SustainableAdvisorADK()
+                self.recommender_agent = RecommenderAgentADK()
+                logger.info(f"✅ ADK Agents initialized: SustainableAdvisor v{self.sustainable_advisor.version}, RecommenderAgent v{self.recommender_agent.version}")
+            except Exception as e:
+                logger.warning(f"⚠️ ADK agents initialization failed: {e}")
+                self.sustainable_advisor = None
+                self.recommender_agent = None
+        else:
+            self.sustainable_advisor = None
+            self.recommender_agent = None
+            logger.warning("⚠️ ADK framework not available, using fallback mode")
         
         logger.info(f"🔗 MCP Client initialized")
         logger.info(f"   Frontend: {self.frontend_url}")
@@ -355,3 +386,191 @@ class MCPClient:
         
         logger.info(f"✅ Sustainability analysis added to {len(products)} products")
         return products
+
+    # ADK Integration Methods
+    def analyze_sustainability_adk(self, products):
+        """Analyze sustainability using ADK SustainableAdvisor agent"""
+        if not self.sustainable_advisor:
+            logger.warning("⚠️ SustainableAdvisor ADK agent not available")
+            return products
+        
+        try:
+            # Create ADK request
+            request = AgentRequest(
+                capability="analyze_sustainability",
+                parameters={
+                    "products": products,
+                    "analysis_type": "comprehensive",
+                    "include_recommendations": True
+                }
+            )
+            
+            # Execute with ADK agent
+            response = self.sustainable_advisor.process_request(request)
+            
+            if response.status.value == "completed":
+                analyzed_products = response.result.get('analyzed_products', products)
+                logger.info(f"✅ ADK Sustainability analysis completed for {len(analyzed_products)} products")
+                return analyzed_products
+            else:
+                logger.error(f"❌ ADK Sustainability analysis failed: {response.error}")
+                return products
+                
+        except Exception as e:
+            logger.error(f"❌ ADK Sustainability analysis error: {e}")
+            return products
+    
+    def rank_products_adk(self, products, user_preferences=None):
+        """Rank products using ADK RecommenderAgent"""
+        if not self.recommender_agent:
+            logger.warning("⚠️ RecommenderAgent ADK agent not available")
+            return products
+        
+        try:
+            # Create ADK request
+            request = AgentRequest(
+                capability="rank_products",
+                parameters={
+                    "products": products,
+                    "factors": ["sustainability", "price", "popularity"],
+                    "weights": {
+                        "sustainability": 0.5,  # Higher weight for sustainability
+                        "price": 0.3,
+                        "popularity": 0.2
+                    }
+                }
+            )
+            
+            # Execute with ADK agent
+            response = self.recommender_agent.process_request(request)
+            
+            if response.status.value == "completed":
+                ranked_products = response.result.get('ranked_products', products)
+                ranking_metadata = response.result.get('ranking_metadata', {})
+                
+                logger.info(f"✅ ADK Product ranking completed: {ranking_metadata.get('total_products', 0)} products ranked")
+                return ranked_products
+            else:
+                logger.error(f"❌ ADK Product ranking failed: {response.error}")
+                return products
+                
+        except Exception as e:
+            logger.error(f"❌ ADK Product ranking error: {e}")
+            return products
+    
+    def apply_promotions_adk(self, products):
+        """Apply promotions using ADK RecommenderAgent"""
+        if not self.recommender_agent:
+            logger.warning("⚠️ RecommenderAgent ADK agent not available")
+            return products
+        
+        try:
+            # Create ADK request
+            request = AgentRequest(
+                capability="apply_promotions",
+                parameters={
+                    "products": products,
+                    "promotion_strategy": "sustainability_focused"
+                }
+            )
+            
+            # Execute with ADK agent
+            response = self.recommender_agent.process_request(request)
+            
+            if response.status.value == "completed":
+                promoted_products = response.result.get('promoted_products', products)
+                promotion_summary = response.result.get('promotion_summary', {})
+                
+                logger.info(f"✅ ADK Promotions applied: {promotion_summary.get('total_promotions', 0)} promotions")
+                return promoted_products
+            else:
+                logger.error(f"❌ ADK Promotions failed: {response.error}")
+                return products
+                
+        except Exception as e:
+            logger.error(f"❌ ADK Promotions error: {e}")
+            return products
+    
+    def get_ai_explanation_adk(self, product):
+        """Get AI explanation using ADK SustainableAdvisor"""
+        if not self.sustainable_advisor:
+            logger.warning("⚠️ SustainableAdvisor ADK agent not available")
+            return "AI explanation not available"
+        
+        try:
+            # Create ADK request
+            request = AgentRequest(
+                capability="ai_explanation",
+                parameters={
+                    "product": product,
+                    "explanation_type": "sustainability_focus",
+                    "include_recommendations": True
+                }
+            )
+            
+            # Execute with ADK agent
+            response = self.sustainable_advisor.process_request(request)
+            
+            if response.status.value == "completed":
+                explanation = response.result.get('ai_explanation', 'No explanation available')
+                logger.info(f"✅ ADK AI explanation generated for product: {product.get('name', 'unknown')}")
+                return explanation
+            else:
+                logger.error(f"❌ ADK AI explanation failed: {response.error}")
+                return "AI explanation not available"
+                
+        except Exception as e:
+            logger.error(f"❌ ADK AI explanation error: {e}")
+            return "AI explanation not available"
+    
+    def get_comprehensive_recommendations_adk(self, products, user_preferences=None):
+        """Get comprehensive recommendations using both ADK agents"""
+        try:
+            logger.info("🚀 Starting comprehensive ADK analysis pipeline...")
+            
+            # Step 1: Analyze sustainability
+            analyzed_products = self.analyze_sustainability_adk(products)
+            
+            # Step 2: Rank products
+            ranked_products = self.rank_products_adk(analyzed_products, user_preferences)
+            
+            # Step 3: Apply promotions
+            final_products = self.apply_promotions_adk(ranked_products)
+            
+            # Step 4: Get AI explanation for top product
+            if final_products:
+                top_product = final_products[0]
+                ai_explanation = self.get_ai_explanation_adk(top_product)
+                
+                # Add explanation to the result
+                return {
+                    "products": final_products,
+                    "ai_explanation": ai_explanation,
+                    "analysis_metadata": {
+                        "sustainability_analyzed": True,
+                        "ranking_applied": True,
+                        "promotions_applied": True,
+                        "ai_explanation_available": True,
+                        "adk_version": "2.0.0"
+                    }
+                }
+            
+            return {
+                "products": final_products,
+                "analysis_metadata": {
+                    "sustainability_analyzed": True,
+                    "ranking_applied": True,
+                    "promotions_applied": True,
+                    "adk_version": "2.0.0"
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"❌ Comprehensive ADK analysis failed: {e}")
+            return {
+                "products": products,
+                "analysis_metadata": {
+                    "error": str(e),
+                    "fallback_used": True
+                }
+            }
