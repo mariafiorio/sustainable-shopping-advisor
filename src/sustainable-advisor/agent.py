@@ -1,6 +1,7 @@
 # src/sustainable-advisor/agent.py
 import json
 import logging
+import os
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 from mcp_client import MCPClient
@@ -9,6 +10,14 @@ from a2a_client import A2AClient
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Google AI integration
+try:
+    import google.generativeai as genai
+    GOOGLE_AI_AVAILABLE = True
+except ImportError:
+    GOOGLE_AI_AVAILABLE = False
+    logger.warning("Google AI not available - using fallback mode")
 
 class SustainableAdvisorAgent:
     """
@@ -25,7 +34,29 @@ class SustainableAdvisorAgent:
         self.mcp_client = MCPClient()
         self.a2a_client = A2AClient()
         self.sustainability_rules = self._load_sustainability_rules()
+        
+        # Initialize Google AI if available
+        self.google_ai_model = None
+        self._init_google_ai()
+        
         logger.info("🌱 SustainableAdvisorAgent inicializado")
+
+    def _init_google_ai(self):
+        """Initialize Google AI with API key from environment"""
+        if GOOGLE_AI_AVAILABLE:
+            api_key = os.getenv('GOOGLE_API_KEY')
+            if api_key:
+                try:
+                    genai.configure(api_key=api_key)
+                    self.google_ai_model = genai.GenerativeModel('gemini-1.5-flash')
+                    logger.info("✅ Google AI configurado com sucesso")
+                except Exception as e:
+                    logger.error(f"❌ Erro ao configurar Google AI: {e}")
+                    self.google_ai_model = None
+            else:
+                logger.warning("⚠️ GOOGLE_API_KEY não encontrada - usando modo fallback")
+        else:
+            logger.warning("⚠️ Google AI não disponível - usando modo fallback")
 
     def _load_sustainability_rules(self) -> Dict[str, Any]:
         """

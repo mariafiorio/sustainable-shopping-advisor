@@ -29,6 +29,13 @@ spec:
         env:
         - name: PORT
           value: "5001"
+        - name: GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: google-api-key
+              key: api-key
+        - name: GOOGLE_GENAI_USE_VERTEXAI
+          value: "FALSE"
         volumeMounts:
         - name: app-code
           mountPath: /app

@@ -22,7 +22,7 @@ spec:
           - -c
           - |
             cd /app
-            pip install flask flask-cors requests
+            pip install flask flask-cors requests google-generativeai
             python api.py
         ports:
         - containerPort: 5002
@@ -33,6 +33,13 @@ spec:
           value: "http://recommender-agent:5001"
         - name: ONLINE_BOUTIQUE_URL
           value: "http://frontend:80"
+        - name: GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: google-api-key
+              key: api-key
+        - name: GOOGLE_GENAI_USE_VERTEXAI
+          value: "FALSE"
         volumeMounts:
         - name: app-code
           mountPath: /app
