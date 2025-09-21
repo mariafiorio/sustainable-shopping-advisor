@@ -418,23 +418,10 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 ## 📞 Contact
 
 **Maria Fiorio**  
-- 📧 Email: [your-email@example.com]
+- 📧 Email: [mari.fiorio.2015Gmail.com]
 - 🐱 GitHub: [@mariafiorio](https://github.com/mariafiorio)
-- 💼 LinkedIn: [Your LinkedIn Profile]
 
 ---
-
-## 🏆 Google Cloud Hackathon 2025
-
-This project was built for the Google Cloud Hackathon 2025, demonstrating how **Agentic AI** can transform e-commerce through intelligent, autonomous agents working collaboratively to solve real-world sustainability challenges.
-
-**🎯 Innovation Focus**: Agentic AI • Model Context Protocol • Agent-to-Agent Communication • Zero-Code Integration
-
-**🚀 Live Demo**: Experience the future of sustainable e-commerce at http://35.225.28.200
-
----
-
-*Built with ❤️ and ☁️ by Maria Fiorio for Google Cloud Hackathon 2025*
 ## 🔧 Local Development Setup
 
 ### Environment Configuration
