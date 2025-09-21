@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommender-agent
+  labels:
+    app: recommender-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommender-agent
+  template:
+    metadata:
+      labels:
+        app: recommender-agent
+    spec:
+      containers:
+      - name: recommender-agent
+        image: python:3.9-slim
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - |
+            cd /app
+            pip install flask flask-cors
+            python app.py
+        ports:
+        - containerPort: 5001
+        env:
+        - name: PORT
+          value: "5001"
+        volumeMounts:
+        - name: app-code
+          mountPath: /app
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+      volumes:
+      - name: app-code
+        configMap:
+          name: recommender-agent-code
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommender-agent
+  labels:
+    app: recommender-agent
+spec:
+  selector:
+    app: recommender-agent
+  ports:
+  - port: 5001
+    targetPort: 5001
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommender-agent-external
+  labels:
+    app: recommender-agent
+spec:
+  selector:
+    app: recommender-agent
+  ports:
+  - port: 80
+    targetPort: 5001
+    name: http
+  type: LoadBalancer

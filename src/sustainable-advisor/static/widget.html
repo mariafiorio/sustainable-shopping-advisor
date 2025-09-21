@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 Sustainable Shopping Widget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .bookmarklet-section {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bookmarklet-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .bookmarklet-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .bookmarklet-section p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .bookmarklets {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .bookmarklet {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .bookmarklet:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bookmarklet:active {
+            cursor: grabbing;
+            transform: translateY(0);
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .test-section h2 {
+            color: #333;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .status {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status.success { 
+            background: linear-gradient(135deg, #d4edda, #c3e6cb); 
+            color: #155724; 
+            border-left: 4px solid #28a745;
+        }
+        
+        .status.error { 
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb); 
+            color: #721c24; 
+            border-left: 4px solid #dc3545;
+        }
+        
+        .status.info { 
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb); 
+            color: #0c5460; 
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .log {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #1a1a1a;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+        
+        .log::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        
+        .log::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        
+        .demo-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="demo-grain" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23demo-grain)"/></svg>');
+            opacity: 0.2;
+        }
+        
+        .demo-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .demo-section p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .demo-section ol {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        .demo-section li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            position: relative;
+        }
+        
+        .demo-section a {
+            color: #FFE082;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .demo-section a:hover {
+            text-decoration: underline;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .bookmarklets {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 Sustainable Shopping Widget</h1>
+            <p>Sua assistente de compras sustentável com inteligência artificial</p>
+        </div>
+        
+        <div class="bookmarklet-section">
+            <h2>� Bookmarklets Interativos</h2>
+            <p><strong>Instruções:</strong> Arraste um dos botões abaixo para sua barra de favoritos e depois clique nele em qualquer loja online!</p>
+            
+            <div class="bookmarklets">
+                <a href="javascript:(function(){var existing=document.getElementById('sustainableWidget');if(existing)existing.remove();var s=document.createElement('script');s.src='http://localhost:8080/bookmarklet.js?v='+Date.now();s.onload=function(){console.log('🌱 Widget bonito carregado')};s.onerror=function(){alert('❌ Serviços offline')};document.head.appendChild(s);})();" 
+                   class="bookmarklet" draggable="true">
+                    🌱 Widget Sustentável
+                </a>
+                
+                <a href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:8080/debug-widget.js?v='+Date.now();s.onload=function(){console.log('🔍 Debug widget carregado')};s.onerror=function(){alert('❌ Erro: Serviços offline')};document.head.appendChild(s);})();" 
+                   class="bookmarklet" draggable="true">
+                    🔍 Debug Widget
+                </a>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Testes de Conectividade</h2>
+            
+            <div class="controls">
+                <button onclick="testCORS()">� Testar CORS</button>
+                <button onclick="testRecommendations()">� Testar API</button>
+                <button onclick="injectTestWidget()">🧪 Injetar Widget</button>
+                <button onclick="clearLog()">�️ Limpar Log</button>
+            </div>
+            
+            <div id="testResults"></div>
+            <div id="logOutput" class="log"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📋 Status dos Serviços</h2>
+            <div id="serviceStatus" class="service-grid">Carregando status...</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🎯 Demonstração na Online Boutique</h2>
+            <p>Para testar o widget na loja online real:</p>
+            <ol>
+                <li>Arraste um dos bookmarklets acima para seus favoritos</li>
+                <li>Abra a Online Boutique: <a href="http://localhost:8081" target="_blank">localhost:8081</a></li>
+                <li>Clique no bookmarklet na página da boutique</li>
+                <li>Veja o widget aparecer com recomendações sustentáveis! 🎉</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        let logElement = document.getElementById('logOutput');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const colorMap = {
+                'info': '#0f0',
+                'warn': '#ff0', 
+                'error': '#f00',
+                'success': '#0f0'
+            };
+            
+            logElement.innerHTML += `<div style="color: ${colorMap[type] || '#0f0'}">[${timestamp}] ${message}</div>`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearLog() {
+            logElement.innerHTML = '';
+        }
+        
+        function updateStatus(id, status, message) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.className = `status ${status}`;
+                element.innerHTML = message;
+            }
+        }
+        
+        async function testCORS() {
+            log('🌐 Testando CORS...', 'info');
+            
+            try {
+                const response = await fetch('http://localhost:5002/health', {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('✅ CORS funcionando! Response: ' + JSON.stringify(data), 'success');
+                    updateStatus('corsStatus', 'success', '✅ CORS OK');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                log('❌ Erro CORS: ' + error.message, 'error');
+                updateStatus('corsStatus', 'error', '❌ CORS Falhou: ' + error.message);
+            }
+        }
+        
+        async function testRecommendations() {
+            log('📊 Testando API de recomendações...', 'info');
+            
+            try {
+                const response = await fetch('http://localhost:5002/recommendations');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    log(`✅ API OK! ${data.recommendations.length} produtos encontrados`, 'success');
+                    updateStatus('apiStatus', 'success', `✅ API OK - ${data.recommendations.length} produtos`);
+                    
+                    // Mostrar primeira recomendação
+                    if (data.recommendations.length > 0) {
+                        const first = data.recommendations[0];
+                        log(`🌱 Primeiro produto: ${first.name} (Score: ${first.sustainability_analysis?.sustainability_score}/100)`, 'success');
+                    }
+                } else {
+                    throw new Error('Status inválido');
+                }
+            } catch (error) {
+                log('❌ Erro API: ' + error.message, 'error');
+                updateStatus('apiStatus', 'error', '❌ API Falhou: ' + error.message);
+            }
+        }
+        
+        function injectTestWidget() {
+            log('🧪 Injetando widget de teste...', 'info');
+            
+            // Remover widget existente
+            const existing = document.getElementById('sustainableWidget');
+            if (existing) existing.remove();
+            
+            // Injetar script do widget bonito
+            const script = document.createElement('script');
+            script.src = 'http://localhost:8080/bookmarklet.js?v=' + Date.now();
+            script.onload = () => log('✅ Widget sustentável injetado com sucesso!', 'success');
+            script.onerror = () => log('❌ Erro ao carregar widget', 'error');
+            document.head.appendChild(script);
+        }
+        
+        async function checkServiceStatus() {
+            const services = [
+                { name: 'SustainableAdvisor', url: 'http://localhost:5002/health', port: 5002 },
+                { name: 'RecommenderAgent', url: 'http://localhost:5001/health', port: 5001 },
+                { name: 'Widget Server', url: 'http://localhost:8080', port: 8080 },
+                { name: 'Online Boutique', url: 'http://localhost:8081', port: 8081 }
+            ];
+            
+            let statusHTML = '';
+            
+            for (const service of services) {
+                try {
+                    const response = await fetch(service.url, { method: 'GET', mode: 'cors' });
+                    if (response.ok) {
+                        statusHTML += `<div class="status success">✅ ${service.name} (${service.port}) - Online</div>`;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    statusHTML += `<div class="status error">❌ ${service.name} (${service.port}) - Offline (${error.message})</div>`;
+                }
+            }
+            
+            document.getElementById('serviceStatus').innerHTML = statusHTML;
+        }
+        
+        // Configurar página automaticamente
+        window.addEventListener('load', async () => {
+            log('🚀 Página carregada, verificando serviços...', 'info');
+            await checkServiceStatus();
+            log('✅ Sistema pronto para uso!', 'success');
+        });
+    </script>
+</body>
+</html>
+          
+    </style>
+</head>
+</html>

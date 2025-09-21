@@ -1,0 +1,162 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: recommender-agent-code
+data:
+  app.py: |
+    from flask import Flask, jsonify, request
+    from flask_cors import CORS
+    import json
+    from datetime import datetime
+    import random
+    
+    app = Flask(__name__)
+    CORS(app)
+    
+    # Active promotions
+    PROMOTIONS = {
+        "0PUK6V6EV0": {"discount": 0.20, "reason": "Handcrafted product spotlight"},
+        "9SIQT8TOJO": {"discount": 0.15, "reason": "Eco-friendly week special"},
+        "6E92ZMYYFZ": {"discount": 0.10, "reason": "Kitchen essentials discount"}
+    }
+    
+    def rank_products(products, user_preferences=None):
+        """Rank products based on multiple factors"""
+        if not products:
+            return []
+        
+        scored_products = []
+        for product in products:
+            # Base sustainability score
+            sustainability_score = product.get("sustainability_analysis", {}).get("sustainability_score", 0)
+            
+            # Promotion score
+            product_id = product.get("id")
+            promotion_score = 0
+            discount_percent = 0
+            promotion_reason = ""
+            
+            if product_id in PROMOTIONS:
+                promo = PROMOTIONS[product_id]
+                promotion_score = promo["discount"] * 100
+                discount_percent = int(promo["discount"] * 100)
+                promotion_reason = promo["reason"]
+            
+            # Preference score
+            preference_score = 0
+            if user_preferences:
+                preferred_category = user_preferences.get("category", "").lower()
+                if preferred_category:
+                    product_categories = [cat.lower() for cat in product.get("categories", [])]
+                    if preferred_category in product_categories:
+                        preference_score = 30
+            
+            # Popularity score (simulated)
+            popularity_score = random.uniform(10, 25)
+            
+            # Final weighted score
+            final_score = (
+                sustainability_score * 0.4 +
+                promotion_score * 0.25 +
+                preference_score * 0.20 +
+                popularity_score * 0.15
+            )
+            
+            # Add ranking metadata
+            enhanced_product = {
+                **product,
+                "discount": discount_percent,
+                "ranking_metadata": {
+                    "final_ranking_score": round(final_score, 2),
+                    "score_components": {
+                        "sustainability_score": sustainability_score,
+                        "promotion_score": promotion_score,
+                        "preference_score": preference_score,
+                        "popularity_score": round(popularity_score, 2)
+                    },
+                    "has_promotion": product_id in PROMOTIONS,
+                    "promotion_discount_percent": discount_percent,
+                    "promotion_reason": promotion_reason,
+                    "recommendation_reasons": [
+                        f"Sustainability score: {sustainability_score}/100",
+                        f"{discount_percent}% discount available" if discount_percent > 0 else "Quality sustainable product",
+                        "Matches your preferences" if preference_score > 0 else "Popular choice"
+                    ],
+                    "ranked_at": datetime.now().isoformat()
+                }
+            }
+            
+            scored_products.append(enhanced_product)
+        
+        # Sort by final score (descending)
+        ranked = sorted(scored_products, key=lambda p: p["ranking_metadata"]["final_ranking_score"], reverse=True)
+        
+        # Add rank positions
+        for i, product in enumerate(ranked, 1):
+            product["ranking_metadata"]["rank_position"] = i
+            product["ranking_metadata"]["is_top_recommendation"] = i <= 3
+        
+        return ranked
+    
+    @app.route('/', methods=['GET'])
+    def home():
+        return jsonify({
+            "service": "RecommenderAgent",
+            "version": "1.0.0", 
+            "description": "AI agent specialized in product ranking with promotions and preferences",
+            "capabilities": {
+                "multi_factor_ranking": "✅ Sustainability + Promotions + Preferences",
+                "dynamic_promotions": "✅ Real-time discount application",
+                "user_personalization": "✅ Preference-based scoring",
+                "a2a_protocol": "✅ Agent-to-Agent communication"
+            },
+            "active_promotions": len(PROMOTIONS),
+            "status": "operational"
+        })
+    
+    @app.route('/health', methods=['GET'])
+    def health():
+        return jsonify({
+            "status": "healthy",
+            "service": "recommender-agent",
+            "timestamp": datetime.now().isoformat(),
+            "active_promotions": len(PROMOTIONS),
+            "ranking_algorithm": "multi_factor_weighted",
+            "version": "1.0.0"
+        })
+    
+    @app.route('/rank', methods=['POST'])
+    def rank_products_endpoint():
+        try:
+            data = request.get_json()
+            if not data:
+                return jsonify({"error": "JSON payload required"}), 400
+            
+            products = data.get("products", [])
+            user_preferences = data.get("user_preferences", {})
+            
+            if not products:
+                return jsonify({"error": "No products provided"}), 400
+            
+            # Perform ranking
+            ranked_products = rank_products(products, user_preferences)
+            
+            return jsonify(ranked_products)
+            
+        except Exception as e:
+            return jsonify({
+                "error": "Ranking error",
+                "message": str(e),
+                "timestamp": datetime.now().isoformat()
+            }), 500
+    
+    @app.route('/promotions', methods=['GET'])
+    def get_promotions():
+        return jsonify({
+            "status": "success",
+            "active_promotions": PROMOTIONS,
+            "total_promotions": len(PROMOTIONS)
+        })
+    
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=5001, debug=False)

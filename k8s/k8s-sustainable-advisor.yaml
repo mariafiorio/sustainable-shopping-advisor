@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sustainable-advisor
+  labels:
+    app: sustainable-advisor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sustainable-advisor
+  template:
+    metadata:
+      labels:
+        app: sustainable-advisor
+    spec:
+      containers:
+      - name: sustainable-advisor
+        image: python:3.9-slim
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - |
+            cd /app
+            pip install flask flask-cors requests
+            python api.py
+        ports:
+        - containerPort: 5002
+        env:
+        - name: PORT
+          value: "5002"
+        - name: RECOMMENDER_AGENT_URL
+          value: "http://recommender-agent:5001"
+        - name: ONLINE_BOUTIQUE_URL
+          value: "http://frontend:80"
+        volumeMounts:
+        - name: app-code
+          mountPath: /app
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+      volumes:
+      - name: app-code
+        configMap:
+          name: sustainable-advisor-code
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sustainable-advisor
+  labels:
+    app: sustainable-advisor
+spec:
+  selector:
+    app: sustainable-advisor
+  ports:
+  - port: 5002
+    targetPort: 5002
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sustainable-advisor-external
+  labels:
+    app: sustainable-advisor
+spec:
+  selector:
+    app: sustainable-advisor
+  ports:
+  - port: 80
+    targetPort: 5002
+    name: http
+  type: LoadBalancer

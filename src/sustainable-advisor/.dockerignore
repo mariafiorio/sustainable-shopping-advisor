@@ -1,0 +1,46 @@
+# .dockerignore
+# Arquivos do Git
+.git
+.gitignore
+
+# Arquivos Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+.venv
+
+# Arquivos do IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Documentação
+README.md
+docs/
+*.md
+
+# Scripts de desenvolvimento
+deploy.sh
+test_*.py
+
+# Arquivos de configuração local
+config.local.*
+.env.local

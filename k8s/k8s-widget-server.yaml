@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: widget-server
+  labels:
+    app: widget-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: widget-server
+  template:
+    metadata:
+      labels:
+        app: widget-server
+    spec:
+      containers:
+      - name: widget-server
+        image: python:3.9-slim
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - |
+            cd /app
+            python -m http.server 8080
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: widget-files
+          mountPath: /app
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+      volumes:
+      - name: widget-files
+        configMap:
+          name: widget-static-files
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: widget-server
+  labels:
+    app: widget-server
+spec:
+  selector:
+    app: widget-server
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: widget-server-external
+  labels:
+    app: widget-server
+spec:
+  selector:
+    app: widget-server
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+  type: LoadBalancer

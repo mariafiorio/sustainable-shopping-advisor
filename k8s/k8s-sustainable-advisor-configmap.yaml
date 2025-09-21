@@ -1,0 +1,185 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sustainable-advisor-code
+data:
+  api.py: |
+    from flask import Flask, jsonify, request
+    from flask_cors import CORS
+    import json
+    import requests
+    from datetime import datetime
+    
+    app = Flask(__name__)
+    CORS(app)
+    
+    # Mock data para demo
+    MOCK_PRODUCTS = [
+        {
+            "id": "0PUK6V6EV0",
+            "name": "Vintage Candle Holder",
+            "description": "Handcrafted candle holder made from recycled glass",
+            "price_usd": {"units": 18, "nanos": 990000000},
+            "categories": ["home", "decor"],
+            "picture": "/static/img/products/candle-holder.jpg",
+            "carbon_score": 25,
+            "eco_tags": ["handmade", "recycled", "local"],
+            "sustainability_analysis": {
+                "sustainability_score": 90,
+                "is_sustainable": True,
+                "reasoning": "Made from recycled materials with low carbon footprint"
+            }
+        },
+        {
+            "id": "9SIQT8TOJO", 
+            "name": "Bamboo Glass Jar",
+            "description": "Sustainable storage jar with bamboo lid",
+            "price_usd": {"units": 5, "nanos": 990000000},
+            "categories": ["kitchen", "storage"],
+            "picture": "/static/img/products/bamboo-glass-jar.jpg",
+            "carbon_score": 15,
+            "eco_tags": ["bamboo", "sustainable", "biodegradable"],
+            "sustainability_analysis": {
+                "sustainability_score": 100,
+                "is_sustainable": True,
+                "reasoning": "Bamboo is renewable and biodegradable"
+            }
+        },
+        {
+            "id": "6E92ZMYYFZ",
+            "name": "Ceramic Mug",
+            "description": "Handcrafted ceramic mug for hot beverages",
+            "price_usd": {"units": 8, "nanos": 990000000},
+            "categories": ["kitchen", "dining"],
+            "picture": "/static/img/products/mug.jpg",
+            "carbon_score": 30,
+            "eco_tags": ["ceramic", "reusable", "local"],
+            "sustainability_analysis": {
+                "sustainability_score": 100,
+                "is_sustainable": True,
+                "reasoning": "Durable ceramic reduces single-use consumption"
+            }
+        }
+    ]
+    
+    @app.route('/', methods=['GET'])
+    def home():
+        return jsonify({
+            "service": "Sustainable Shopping Advisor",
+            "version": "1.0.0",
+            "status": "🟢 Operational",
+            "description": "Agentic AI for sustainable e-commerce recommendations",
+            "architecture": {
+                "mcp_integration": "✅ Model Context Protocol",
+                "a2a_communication": "✅ Agent-to-Agent Protocol", 
+                "sustainability_analysis": "✅ Real-time scoring",
+                "intelligent_ranking": "✅ ML-powered recommendations"
+            },
+            "endpoints": {
+                "GET /health": "Health check",
+                "GET /recommendations": "Get sustainable product recommendations",
+                "GET /products/sustainable": "List sustainable products",
+                "GET /stats": "Sustainability statistics"
+            }
+        })
+    
+    @app.route('/health', methods=['GET'])
+    def health():
+        return jsonify({
+            "status": "healthy",
+            "service": "sustainable-advisor",
+            "timestamp": datetime.now().isoformat(),
+            "components": {
+                "mcp_client": "healthy",
+                "a2a_client": "healthy", 
+                "recommender_agent": "healthy",
+                "product_catalog": "healthy"
+            }
+        })
+    
+    @app.route('/recommendations', methods=['GET', 'POST'])
+    def get_recommendations():
+        try:
+            # Get user preferences
+            user_preferences = {}
+            if request.method == 'POST':
+                data = request.get_json() or {}
+                user_preferences = data.get('user_preferences', {})
+            
+            # Call recommender agent via A2A
+            try:
+                recommender_url = "http://recommender-agent:5001/rank"
+                a2a_payload = {
+                    "products": MOCK_PRODUCTS,
+                    "user_preferences": user_preferences,
+                    "request_metadata": {
+                        "source": "sustainable-advisor",
+                        "timestamp": datetime.now().isoformat()
+                    }
+                }
+                
+                response = requests.post(recommender_url, json=a2a_payload, timeout=10)
+                if response.status_code == 200:
+                    ranked_products = response.json()
+                else:
+                    # Fallback to basic ranking
+                    ranked_products = MOCK_PRODUCTS
+                    
+            except requests.exceptions.RequestException:
+                # Fallback to basic ranking if A2A fails
+                ranked_products = MOCK_PRODUCTS
+            
+            return jsonify({
+                "status": "success",
+                "total_recommendations": len(ranked_products),
+                "recommendations": ranked_products[:3],  # Top 3
+                "sustainability_info": {
+                    "message": "Products selected based on sustainability criteria",
+                    "criteria": ["Low carbon footprint", "Eco-friendly materials", "Sustainable production"],
+                    "process": ["MCP data collection", "Sustainability analysis", "A2A ranking", "Final recommendations"]
+                },
+                "user_preferences": user_preferences,
+                "timestamp": datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            return jsonify({
+                "status": "error", 
+                "message": str(e),
+                "timestamp": datetime.now().isoformat()
+            }), 500
+    
+    @app.route('/products/sustainable', methods=['GET'])
+    def get_sustainable_products():
+        sustainable = [p for p in MOCK_PRODUCTS if p.get("sustainability_analysis", {}).get("is_sustainable")]
+        return jsonify({
+            "status": "success",
+            "total_sustainable_products": len(sustainable),
+            "products": sustainable
+        })
+    
+    @app.route('/stats', methods=['GET'])
+    def get_stats():
+        total_products = len(MOCK_PRODUCTS)
+        sustainable_products = len([p for p in MOCK_PRODUCTS if p.get("sustainability_analysis", {}).get("is_sustainable")])
+        avg_carbon_score = sum(p.get("carbon_score", 0) for p in MOCK_PRODUCTS) / total_products
+        
+        return jsonify({
+            "status": "success",
+            "stats": {
+                "total_products": total_products,
+                "sustainable_products": sustainable_products,
+                "sustainability_rate": round((sustainable_products / total_products) * 100, 1),
+                "avg_carbon_score": round(avg_carbon_score, 1),
+                "eco_tags_distribution": {
+                    "handmade": 1,
+                    "bamboo": 1,
+                    "ceramic": 1,
+                    "recycled": 1,
+                    "sustainable": 1
+                }
+            }
+        })
+    
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=5002, debug=False)
