@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RecommenderAgent - Agente especializado em ranking baseado em promoções e preferências
+RecommenderAgent - Specialized agent for ranking based on promotions and preferences
 """
 
 from flask import Flask, request, jsonify
@@ -22,11 +22,11 @@ app = Flask(__name__)
 
 class RecommenderAgent:
     """
-    Agente especializado em ranking baseado em:
-    1. Promoções ativas
-    2. Preferências do usuário
-    3. Padrões de comportamento
-    4. Popularidade simulada
+    Specialized agent for ranking based on:
+    1. Active promotions
+    2. User preferences
+    3. Behavioral patterns
+    4. Simulated popularity
     """
     
     def __init__(self):
@@ -72,45 +72,45 @@ class RecommenderAgent:
         }
         
         logger.info("🎯 RecommenderAgent inicializado")
-        logger.info(f"📢 {len(self.promotions)} promoções ativas")
-        logger.info(f"👥 {len(self.user_behavior_patterns)} padrões de comportamento configurados")
+        logger.info(f"📢 {len(self.promotions)} active promotions")
+        logger.info(f"👥 {len(self.user_behavior_patterns)} behavior patterns configured")
 
     def rank_products(self, products: List[Dict], user_preferences: Dict = None) -> List[Dict]:
         """
-        Método principal para ranking de produtos
+        Main method for product ranking
         """
         if not products:
-            logger.warning("⚠️ Lista de produtos vazia recebida")
+            logger.warning("⚠️ Empty product list received")
             return []
         
-        logger.info(f"📊 Iniciando ranking de {len(products)} produtos")
+        logger.info(f"📊 Starting ranking of {len(products)} products")
         
-        # Processar cada produto
+        # Process each product
         scored_products = []
         for product in products:
             enhanced_product = self._enhance_product_with_ranking(product, user_preferences)
             scored_products.append(enhanced_product)
         
-        # Ordenar por ranking_score (decrescente)
+        # Sort by ranking_score (descending)
         ranked_products = sorted(
             scored_products,
             key=lambda p: p.get("ranking_metadata", {}).get("final_ranking_score", 0),
             reverse=True
         )
         
-        # Adicionar posições no ranking
+        # Add ranking positions
         for i, product in enumerate(ranked_products, 1):
             product["ranking_metadata"]["rank_position"] = i
             product["ranking_metadata"]["is_top_recommendation"] = i <= 3
         
-        logger.info(f"✅ Ranking concluído. Top produto: {ranked_products[0].get('name')}")
-        logger.info(f"🏆 Score do líder: {ranked_products[0].get('ranking_metadata', {}).get('final_ranking_score', 0)}")
+        logger.info(f"✅ Ranking completed. Top product: {ranked_products[0].get('name')}")
+        logger.info(f"🏆 Leader score: {ranked_products[0].get('ranking_metadata', {}).get('final_ranking_score', 0)}")
         
         return ranked_products
 
     def _enhance_product_with_ranking(self, product: Dict, user_preferences: Dict = None) -> Dict:
         """
-        Adiciona informações de ranking a um produto
+        Adds ranking information to a product
         """
         product_id = product.get("id")
         product_name = product.get("name", "Produto sem nome")
@@ -141,7 +141,7 @@ class RecommenderAgent:
             discount_percent = int(promo["discount"] * 100)
             promotion_reason = promo["reason"]
         
-        # Metadados de ranking
+        # Ranking metadata
         ranking_metadata = {
             "final_ranking_score": round(final_score, 2),
             "score_components": {
@@ -161,7 +161,7 @@ class RecommenderAgent:
             "agent_version": "1.0.0"
         }
         
-        # Retornar produto com informações de ranking
+        # Return product with ranking information
         enhanced_product = {
             **product,
             "discount": discount_percent,  # Para compatibilidade
@@ -356,7 +356,7 @@ class RecommenderAgent:
         
         return reasons
 
-# Instanciar o agente
+# Instantiate the agent
 recommender = RecommenderAgent()
 
 @app.route('/', methods=['GET'])
@@ -365,7 +365,7 @@ def home():
     return jsonify({
         "service": "RecommenderAgent",
         "version": "1.0.0",
-        "description": "Agente especializado em ranking de produtos baseado em promoções e preferências",
+        "description": "Specialized agent for product ranking based on promotions and preferences",
         "endpoints": {
             "POST /rank": "Rankear lista de produtos",
             "GET /health": "Health check",
@@ -382,7 +382,7 @@ def home():
 def health_check():
     """Health check endpoint"""
     try:
-        # Verificar se o agente está funcionando
+        # Check if the agent is working
         test_product = {
             "id": "test",
             "name": "Test Product",
@@ -418,7 +418,7 @@ def rank_products():
     """
     Endpoint principal para ranking de produtos
     Recebe lista de produtos e preferências do usuário
-    Retorna produtos rankeados com metadados
+    Returns ranked products with metadata
     """
     try:
         data = request.get_json()
@@ -538,7 +538,7 @@ def internal_error(error):
 if __name__ == '__main__':
     import os
     
-    # Configurações do servidor
+    # Server configuration
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT', 5001))
     debug = os.getenv('DEBUG', 'False').lower() == 'true'
@@ -551,5 +551,5 @@ if __name__ == '__main__':
     try:
         app.run(host=host, port=port, debug=debug)
     except Exception as e:
-        logger.error(f"❌ Erro ao iniciar servidor: {e}")
+        logger.error(f"❌ Error starting server: {e}")
         raise

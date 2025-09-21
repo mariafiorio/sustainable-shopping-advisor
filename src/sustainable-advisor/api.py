@@ -80,16 +80,16 @@ def home():
             
             <div class="endpoint">
                 <span class="method">GET</span> <strong>/products/sustainable</strong>
-                <p>Lista todos os produtos sustentáveis sem ranking do RecommenderAgent</p>
+                <p>Lists all sustainable products without RecommenderAgent ranking</p>
             </div>
             
-            <h2>🔗 Arquitetura</h2>
+            <h2>🔗 Architecture</h2>
             <p>
                 <strong>SustainableAdvisorAgent</strong> → MCP → Online Boutique Catalog<br>
-                <strong>SustainableAdvisorAgent</strong> → A2A → RecommenderAgent → Ranking Final
+                <strong>SustainableAdvisorAgent</strong> → A2A → RecommenderAgent → Final Ranking
             </p>
             
-            <h2>📊 Exemplo de Uso</h2>
+            <h2>📊 Usage Example</h2>
             <pre>
 curl -X GET "{{ base_url }}/recommendations"
 curl -X POST "{{ base_url }}/recommendations" -H "Content-Type: application/json" -d '{"user_preferences": {"category": "kitchen"}}'
@@ -188,16 +188,16 @@ def get_sustainable_recommendations():
             "sustainability_info": {
                 "message": "Produtos selecionados com base em critérios de sustentabilidade",
                 "criteria": [
-                    "Baixa pegada de carbono (carbon_score < 50)",
-                    "Tags ecológicas (sustainable, bamboo, local, etc.)",
-                    "Materiais renováveis e biodegradáveis",
-                    "Práticas de produção sustentáveis"
+                    "Low carbon footprint (carbon_score < 50)",
+                    "Eco-friendly tags (sustainable, bamboo, local, etc.)",
+                    "Renewable and biodegradable materials",
+                    "Sustainable production practices"
                 ],
                 "ranking_process": [
-                    "1. Análise de sustentabilidade (SustainableAdvisorAgent)",
-                    "2. Filtragem por critérios eco-friendly",
-                    "3. Ranking por promoções e preferências (RecommenderAgent)",
-                    "4. Score final e explicações"
+                    "1. Sustainability analysis (SustainableAdvisorAgent)",
+                    "2. Filtering by eco-friendly criteria",
+                    "3. Ranking by promotions and preferences (RecommenderAgent)",
+                    "4. Final score and explanations"
                 ]
             },
             "request_metadata": {
@@ -221,18 +221,18 @@ def get_sustainable_recommendations():
 @app.route('/products/sustainable', methods=['GET'])
 def get_sustainable_products():
     """
-    Lista produtos sustentáveis sem ranking (apenas análise de sustentabilidade)
+    Lists sustainable products without ranking (sustainability analysis only)
     """
     if not advisor_agent:
         return jsonify({
             "status": "error",
-            "message": "SustainableAdvisorAgent não está disponível"
+            "message": "SustainableAdvisorAgent is not available"
         }), 503
     
     try:
         user_preferences = dict(request.args) if request.args else {}
         
-        # Obter apenas produtos sustentáveis (sem ranking A2A)
+        # Get only sustainable products (without A2A ranking)
         sustainable_products = advisor_agent.get_sustainable_products(user_preferences)
         
         response = {
@@ -240,13 +240,13 @@ def get_sustainable_products():
             "total_sustainable_products": len(sustainable_products),
             "products": sustainable_products,
             "sustainability_analysis_only": True,
-            "note": "Produtos filtrados apenas por critérios de sustentabilidade, sem ranking de promoções"
+            "note": "Products filtered only by sustainability criteria, without promotional ranking"
         }
         
         return jsonify(response)
         
     except Exception as e:
-        logger.error(f"❌ Erro ao obter produtos sustentáveis: {e}")
+        logger.error(f"❌ Error getting sustainable products: {e}")
         return jsonify({
             "status": "error",
             "message": str(e)
@@ -320,7 +320,7 @@ def get_sustainability_stats():
     try:
         stats = advisor_agent.get_sustainability_stats()
         
-        # Adicionar informações extras
+        # Add extra information
         stats["api_info"] = {
             "endpoint": "/stats",
             "description": "Estatísticas de sustentabilidade do catálogo completo",
@@ -342,12 +342,12 @@ def get_sustainability_stats():
 @app.route('/agent/config', methods=['GET'])
 def get_agent_config():
     """
-    Retorna configuração atual do agente
+    Returns current agent configuration
     """
     if not advisor_agent:
         return jsonify({
             "status": "error",
-            "message": "SustainableAdvisorAgent não está disponível"
+            "message": "SustainableAdvisorAgent is not available"
         }), 503
     
     try:
@@ -364,7 +364,7 @@ def get_agent_config():
         return jsonify(config)
         
     except Exception as e:
-        logger.error(f"❌ Erro ao obter configuração: {e}")
+        logger.error(f"❌ Error getting configuration: {e}")
         return jsonify({
             "status": "error",
             "message": str(e)
@@ -396,12 +396,12 @@ def internal_error(error):
     }), 500
 
 if __name__ == '__main__':
-    # Configuração do servidor
+    # Server configuration
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT', 5002))
     debug = os.getenv('DEBUG', 'False').lower() == 'true'
     
-    logger.info(f"🚀 Iniciando Sustainable Shopping Advisor API em {host}:{port}")
+    logger.info(f"🚀 Starting Sustainable Shopping Advisor API on {host}:{port}")
     logger.info(f"🔧 Debug mode: {debug}")
     
     if advisor_agent:

@@ -4,7 +4,7 @@
 (function() {
     'use strict';
     
-    console.log('🌱 Sustainable Shopping Widget - Iniciando v2.1...');
+    console.log('🌱 Sustainable Shopping Widget - Starting v2.1...');
     
     // Verificar se já existe
     const existingWidget = document.getElementById('sustainableWidget');
@@ -386,9 +386,9 @@
     }
     console.log('✅ Widget confirmado no DOM');
     
-    // Função para carregar recomendações
+    // Function to load recommendations
     function loadRecommendations() {
-        console.log('🔄 Iniciando carregamento de recomendações...');
+        console.log('🔄 Starting recommendation loading...');
         const contentDiv = document.getElementById('swContent');
         
         if (!contentDiv) {
@@ -418,7 +418,7 @@
                             <div>📡 Tentativas realizadas: ${attempts}</div>
                             <div>🔗 URLs testadas:</div>
                             ${urls.map(url => `<div>• ${url}</div>`).join('')}
-                            <div style="margin-top: 10px;">🚀 Para iniciar os serviços:</div>
+                            <div style="margin-top: 10px;">🚀 To start the services:</div>
                             <div>python3 api.py (porta 5002)</div>
                             <div>python3 app.py (porta 5001)</div>
                         </div>
@@ -431,7 +431,7 @@
             attempts++;
             console.log(`🌐 Tentativa ${attempts}: ${url}`);
             
-            // Usar fetch com configurações específicas para CORS
+            // Use fetch with specific CORS configurations
             fetch(url, {
                 method: 'GET',
                 mode: 'cors',
@@ -448,7 +448,7 @@
                 return response.json();
             })
             .then(data => {
-                console.log('📊 Dados recebidos:', data);
+                console.log('📊 Data received:', data);
                 if (data.status === 'success' && data.recommendations && data.recommendations.length > 0) {
                     renderRecommendations(data.recommendations);
                 } else {
@@ -530,7 +530,7 @@
     
     // Aguardar um pouco para garantir que o widget foi renderizado
     setTimeout(() => {
-        console.log('🔄 Iniciando carregamento de dados...');
+        console.log('🔄 Starting data loading...');
         loadRecommendations();
     }, 100);
     

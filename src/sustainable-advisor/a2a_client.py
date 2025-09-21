@@ -15,8 +15,8 @@ class A2AClient:
     
     Responsabilidades:
     1. Enviar produtos sustentáveis para RecommenderAgent
-    2. Receber ranking baseado em promoções e preferências do usuário
-    3. Implementar fallbacks robustos em caso de falha
+    2. Receive ranking based on promotions and user preferences
+    3. Implement robust fallbacks in case of failure
     4. Monitorar performance e logs da comunicação A2A
     """
     
@@ -34,7 +34,7 @@ class A2AClient:
     ) -> List[Dict[str, Any]]:
         """
         Envia produtos sustentáveis para o RecommenderAgent via A2A
-        e recebe ranking refinado baseado em promoções e preferências
+        and receives refined ranking based on promotions and preferences
         
         Args:
             products: Lista de produtos sustentáveis com análise
@@ -70,8 +70,8 @@ class A2AClient:
                     time.sleep(self.retry_delay)
                     self.retry_delay *= 2  # Exponential backoff
         
-        # Se todas as tentativas falharam, usar fallback
-        logger.warning("⚠️ Todas as tentativas de comunicação A2A falharam - usando fallback")
+        # If all attempts failed, use fallback
+        logger.warning("⚠️ All A2A communication attempts failed - using fallback")
         return self._fallback_ranking(products)
 
     def _prepare_a2a_payload(
@@ -82,7 +82,7 @@ class A2AClient:
         """
         Prepara payload para comunicação A2A com RecommenderAgent
         """
-        # Extrair informações essenciais dos produtos para envio
+        # Extract essential product information for sending
         simplified_products = []
         for product in products:
             simplified_product = {
@@ -171,9 +171,9 @@ class A2AClient:
         """
         try:
             ranked_data = response.json()
-            logger.debug(f"📥 Dados recebidos do RecommenderAgent: {type(ranked_data)}")
+            logger.debug(f"📥 Data received from RecommenderAgent: {type(ranked_data)}")
             
-            # Se a resposta é uma lista simples (fallback do RecommenderAgent)
+            # If the response is a simple list (RecommenderAgent fallback)
             if isinstance(ranked_data, list):
                 logger.debug("📝 Processando resposta como lista simples")
                 return self._reconstruct_products_from_simple_list(ranked_data, original_products)

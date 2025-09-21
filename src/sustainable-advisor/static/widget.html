@@ -319,12 +319,12 @@
             <p><strong>Instruções:</strong> Arraste um dos botões abaixo para sua barra de favoritos e depois clique nele em qualquer loja online!</p>
             
             <div class="bookmarklets">
-                <a href="javascript:(function(){var existing=document.getElementById('sustainableWidget');if(existing)existing.remove();var s=document.createElement('script');s.src='http://localhost:8080/bookmarklet.js?v='+Date.now();s.onload=function(){console.log('🌱 Widget bonito carregado')};s.onerror=function(){alert('❌ Serviços offline')};document.head.appendChild(s);})();" 
+                <a href="javascript:(function(){var existing=document.getElementById('sustainableWidget');if(existing)existing.remove();var s=document.createElement('script');s.src='http://localhost:8080/bookmarklet.js?v='+Date.now();s.onload=function(){console.log('🌱 Beautiful widget loaded')};s.onerror=function(){alert('❌ Services offline')};document.head.appendChild(s);})();" 
                    class="bookmarklet" draggable="true">
                     🌱 Widget Sustentável
                 </a>
                 
-                <a href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:8080/debug-widget.js?v='+Date.now();s.onload=function(){console.log('🔍 Debug widget carregado')};s.onerror=function(){alert('❌ Erro: Serviços offline')};document.head.appendChild(s);})();" 
+                <a href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:8080/debug-widget.js?v='+Date.now();s.onload=function(){console.log('🔍 Debug widget loaded')};s.onerror=function(){alert('❌ Error: Services offline')};document.head.appendChild(s);})();" 
                    class="bookmarklet" draggable="true">
                     🔍 Debug Widget
                 </a>
@@ -346,7 +346,7 @@
         </div>
         
         <div class="test-section">
-            <h2>📋 Status dos Serviços</h2>
+            <h2>📋 Services Status</h2>
             <div id="serviceStatus" class="service-grid">Carregando status...</div>
         </div>
         
@@ -481,9 +481,9 @@
         
         // Configurar página automaticamente
         window.addEventListener('load', async () => {
-            log('🚀 Página carregada, verificando serviços...', 'info');
+            log('🚀 Page loaded, checking services...', 'info');
             await checkServiceStatus();
-            log('✅ Sistema pronto para uso!', 'success');
+            log('✅ System ready for use!', 'success');
         });
     </script>
 </body>

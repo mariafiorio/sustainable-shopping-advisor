@@ -11,14 +11,14 @@ class RecommenderAgent(Agent):
             name="RecommenderAgent",
             model="gemini-2.0-flash",  # Use sua chave Gemini
             description="Agente que rankeia produtos com base em promoções e preferências do usuário",
-            instruction="Você é um consultor de promoções. Rankear produtos recebidos do SustainableAdvisorAgent.",
+            instruction="You are a promotions consultant. Rank products received from SustainableAdvisorAgent.",
         )
 
     def rank_products(self, products):
         """
-        Exemplo de ranking simples:
-        - Prioriza produtos com maior desconto
-        - Pode adicionar filtros baseados em histórico do usuário ou preferências
+        Simple ranking example:
+        - Prioritizes products with higher discounts
+        - Can add filters based on user history or preferences
         """
         # Ordena produtos do maior para menor desconto
         ranked = sorted(products, key=lambda x: x.get("discount", 0), reverse=True)
