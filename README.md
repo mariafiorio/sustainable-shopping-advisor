@@ -11,7 +11,7 @@
 
 **Transform your online boutique platform with intelligent sustainability insights using Agentic AI on Google Kubernetes Engine**
 
-[🚀 Live Demo](http://35.225.28.200) • [🛍️ Enhanced Boutique](http://34.69.27.233) • [📊 API Documentation](http://34.173.133.122/docs)
+[🚀 Live Demo](http://35.225.28.200) • [🛍️ Enhanced Boutique](http://34.69.27.233) 
 
 </div>
 
@@ -21,7 +21,7 @@
 
 **Problem:** E-commerce platforms lack intelligent sustainability guidance, making it difficult for consumers to make eco-friendly purchasing decisions.
 
-**Solution:** An external AI layer that augments any existing e-commerce application with real-time sustainability analysis and intelligent recommendations—without modifying a single line of original code.
+**Solution:** An external AI layer that augments the existing e-commerce application with real-time sustainability analysis and intelligent recommendations, without modifying a single line of original code.
 
 **Innovation:** Agentic AI architecture using Google's Agent Development Kit (ADK) with autonomous agents that communicate via Agent-to-Agent (A2A) protocol.
 
@@ -69,7 +69,7 @@ graph TB
 | Service | URL | Purpose |
 |---------|-----|---------|
 | 🎨 **Widget Demo** | http://35.225.28.200 | Interactive sustainability interface |
-| 🛍️ **Enhanced Boutique** | http://34.69.27.233 | Augmented e-commerce platform |
+| 🛍️ **Online Boutique** | http://34.69.27.233 | Online Boutique |
 | 🧠 **SustainableAdvisor API** | http://34.173.133.122 | AI sustainability analysis |
 | 🎯 **RecommenderAgent API** | http://34.44.25.111 | Intelligent product ranking |
 
@@ -365,18 +365,6 @@ class MyNewAgent(BaseAgent):
         # Implement your agent logic
         return {'result': 'success'}
 ```
-
-## 📜 **License**
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 **Acknowledgments**
-
-- **Google Cloud Platform**: For providing GKE and AI infrastructure
-- **Online Boutique Team**: For the excellent microservices demo application  
-- **Google AI**: For Gemini API access and documentation
-- **Kubernetes Community**: For container orchestration excellence
-
 ## 📞 **Contact & Demo**
 
 - **👩‍💻 Developer**: Maria Fiorio
@@ -387,10 +375,6 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 ---
 
 <div align="center">
-
-**🌱 Making E-commerce Sustainable, One AI Agent at a Time**
-
-*Built with ❤️ for Google Cloud Hackathon 2025*
 
 ![Built for GKE 10th Anniversary](https://img.shields.io/badge/Built_for-GKE_10th_Anniversary-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
 
