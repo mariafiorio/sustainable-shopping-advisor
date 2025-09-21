@@ -1,5 +1,5 @@
 # 🌱 Sustainable Shopping Advisor
-### Agentic AI Layer for E-commerce Sustainability | Google Cloud Hackathon 2025
+### Agentic AI Layer for E-commerce Sustainability | GKE Turns 10 Hackathon 2025
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 ![MCP](https://img.shields.io/badge/Model_Context_Protocol-MCP-4ECDC4?style=for-the-badge)
 ![A2A](https://img.shields.io/badge/Agent_to_Agent-A2A-45B7D1?style=for-the-badge)
 
-**Transform ANY e-commerce platform with intelligent sustainability insights using Agentic AI on Google Kubernetes Engine**
+**Transform your online boutique platform with intelligent sustainability insights using Agentic AI on Google Kubernetes Engine**
 
 [🚀 Live Demo](http://35.225.28.200) • [🛍️ Enhanced Boutique](http://34.69.27.233) • [📊 API Documentation](http://34.173.133.122/docs)
 
