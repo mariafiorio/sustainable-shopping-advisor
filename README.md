@@ -135,7 +135,6 @@ graph TB
 - **Zero Code Changes**: Original Online Boutique runs completely unmodified
 - **Containerized Intelligence**: New smart components deployed alongside existing services
 - **API Integration**: MCP server reads existing microservice APIs without touching core code
-- **Universal Widget**: Bookmarklet works on any e-commerce site, not just Online Boutique
 
 ## 🛠️ **Technology Stack & Implementation**
 
@@ -185,7 +184,7 @@ export GOOGLE_API_KEY="your-google-ai-key-here"
 1. **Visit Widget Demo**: http://35.225.28.200
 2. **Get Bookmarklet**: Drag the bookmarklet to your browser favorites
 3. **Test on Original Boutique**: http://34.69.27.233 (untouched codebase)
-4. **Try on Any Site**: Click bookmarklet on any e-commerce website!
+4. **Try on**: Click bookmarklet on the Online Boutique
 
 ### **4. Verify Zero-Touch Integration**
 - Original Online Boutique runs exactly as before
@@ -339,7 +338,6 @@ python main.py
 ### **🎯 Technologies Leveraged**
 - **Required**: ☸️ GKE + 🤖 Google AI (Gemini 1.5 Flash)
 - **Optional**: 🔧 ADK + 🔗 MCP + 🤝 A2A protocols
-- **Enhancement**: Universal bookmarklet works on any e-commerce site
 
 ### **� Data Sources & Findings**
 - **Product Data**: Real-time access via Online Boutique ProductCatalog API
@@ -361,7 +359,7 @@ Built as containerized "external brain" that reads existing APIs, processes with
 
 ### **⚡ Quick Test Scenarios**
 1. **Zero-Touch Verification**: Compare original boutique vs enhanced experience
-2. **Universal Widget**: Test bookmarklet on any e-commerce website
+2. **Widget**: Test bookmarklet 
 3. **Agent Communication**: Observe A2A protocol in action through API responses
 4. **Real-time AI**: See Gemini-powered sustainability explanations
 
