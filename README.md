@@ -1,5 +1,5 @@
 # 🌱 Sustainable Shopping Advisor
-### Agentic AI Layer for E-commerce Sustainability | GKE Turns 10 Hackathon 2025
+### AI-Powered External Brain for E-commerce Sustainability | GKE Turns 10 Hackathon 2025
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 ![MCP](https://img.shields.io/badge/Model_Context_Protocol-MCP-4ECDC4?style=for-the-badge)
 ![A2A](https://img.shields.io/badge/Agent_to_Agent-A2A-45B7D1?style=for-the-badge)
 
-**Transform your online boutique platform with intelligent sustainability insights using Agentic AI on Google Kubernetes Engine**
+**Transform Online Boutique with intelligent sustainability insights using Agentic AI - Zero Code Changes Required**
 
 [🚀 Live Demo](http://35.225.28.200) • [🛍️ Enhanced Boutique](http://34.69.27.233) 
 
@@ -17,40 +17,43 @@
 
 ---
 
-## 🎯 **Challenge Overview**
+## 🎯 **GKE Turns 10 Hackathon Challenge**
 
-**Problem:** E-commerce platforms lack intelligent sustainability guidance, making it difficult for consumers to make eco-friendly purchasing decisions.
+**The Challenge:** Give Microservices an AI Upgrade
 
-**Solution:** An external AI layer that augments the existing e-commerce application with real-time sustainability analysis and intelligent recommendations, without modifying a single line of original code.
+**Our Solution:** Built an intelligent "external brain" that supercharges the existing Online Boutique application with sustainability insights, without touching a single line of the original microservice code.
 
-**Innovation:** Agentic AI architecture using Google's Agent Development Kit (ADK) with autonomous agents that communicate via Agent-to-Agent (A2A) protocol.
+**The Innovation:** Agentic AI architecture using containerized components that interact with existing APIs, creating a smart layer of intelligence that transforms user shopping experience through real-time sustainability analysis.
 
-## 🏗️ **Architecture**
+## 🏗️ **Architecture: External Brain Approach**
 
 ```mermaid
 graph TB
-    subgraph "🌐 E-commerce Platform (Unchanged)"
-        OB[Online Boutique]
+    subgraph "🌐 Online Boutique (UNTOUCHED)"
+        OB[Online Boutique App]
         PC[ProductCatalog Service]
         CS[Cart Service]
         CU[Currency Service]
+        FE[Frontend Service]
     end
     
-    subgraph "🤖 Agentic AI Layer (New)"
-        ADK[Agent Development Kit]
+    subgraph "� External AI Brain (NEW CONTAINERIZED COMPONENTS)"
+        ADK[Agent Development Kit Framework]
         SA[SustainableAdvisor Agent]
         RA[RecommenderAgent]
-        MCP[MCP Client]
+        MCP[MCP Server]
         GEMINI[Google AI - Gemini 1.5]
+        WIDGET[Universal Widget Layer]
     end
     
-    subgraph "🖥️ User Interface"
-        WIDGET[Universal Widget]
+    subgraph "🖥️ User Interface Enhancement"
         BOOK[Bookmarklet]
+        DEMO[Widget Demo]
     end
     
+    BOOK --> WIDGET
+    DEMO --> WIDGET
     WIDGET --> SA
-    BOOK --> SA
     SA <--> RA
     SA --> MCP
     MCP --> PC
@@ -62,20 +65,21 @@ graph TB
     style SA fill:#4ecdc4
     style RA fill:#45b7d1
     style GEMINI fill:#34a853
+    style OB fill:#f9f9f9,stroke:#999,stroke-dasharray: 5 5
 ```
 
-### 📊 **Simple Architecture Overview**
+### 📊 **Zero-Touch Integration Philosophy**
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    🌐 User Interface Layer                      │
+│                   🌐 User Experience Layer                      │
 ├─────────────────────────────────────────────────────────────────┤
 │  📱 Bookmarklet  │  🎨 Widget Demo  │  🛍️ Online Boutique    │
 └─────────────┬───────────────┬───────────────┬───────────────────┘
               │               │               │
               ▼               ▼               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                   🤖 Agentic AI Layer (NEW)                     │
+│                � EXTERNAL AI BRAIN (NEW)                       │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌─────────────────┐    A2A     ┌─────────────────┐             │
@@ -89,106 +93,105 @@ graph TB
 │            │                                                     │
 │            ▼                                                     │
 │  ┌─────────────────┐                                             │
-│  │  MCP Client     │                                             │
-│  │  • Protocol     │                                             │
-│  │  • Microservice │                                             │
-│  │    Integration  │                                             │
+│  │  MCP Server     │                                             │
+│  │  • API Bridge   │                                             │
+│  │  • Data Access  │                                             │
+│  │  • Zero Touch   │                                             │
 │  └─────────┬───────┘                                             │
 └────────────┼─────────────────────────────────────────────────────┘
              │
              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│               🏪 E-commerce Platform (UNCHANGED)                │
+│          🏪 Online Boutique (COMPLETELY UNTOUCHED)              │
 ├─────────────────────────────────────────────────────────────────┤
 │  ProductCatalog │ CartService │ CurrencyService │ Frontend       │
 └─────────────────────────────────────────────────────────────────┘
 
-Flow: User → Widget → SustainableAdvisor → MCP → E-commerce APIs
-      SustainableAdvisor ←→ RecommenderAgent (A2A Protocol)
-      SustainableAdvisor → Google AI (Gemini 1.5 Flash)
+💡 Key Insight: Smart containerized components read existing APIs 
+   through MCP protocol - no code modifications needed!
 ```
 
-## 🚀 **Live Deployment**
+## 🚀 **Live Deployment & Demo**
 
-| Service | URL | Purpose |
+| Component | URL | Purpose |
 |---------|-----|---------|
-| 🎨 **Widget Demo** | http://35.225.28.200 | Interactive sustainability interface |
-| 🛍️ **Online Boutique** | http://34.69.27.233 | Online Boutique |
-| 🧠 **SustainableAdvisor API** | http://34.173.133.122 | AI sustainability analysis |
-| 🎯 **RecommenderAgent API** | http://34.44.25.111 | Intelligent product ranking |
+| 🎨 **Widget Demo** | http://35.225.28.200 | Interactive sustainability interface & bookmarklet |
+| 🛍️ **Online Boutique** | http://34.69.27.233 | Original e-commerce app (completely untouched) |
+| 🧠 **SustainableAdvisor API** | http://34.173.133.122 | AI sustainability analysis brain |
+| 🎯 **RecommenderAgent API** | http://34.44.25.111 | Intelligent product ranking agent |
 
-## ⭐ **Key Features**
+## ⭐ **Hackathon Requirements Fulfilled**
 
-### 🤖 **Agentic AI Architecture**
-- **Agent Development Kit (ADK)**: Modular framework for AI agent development
-- **SustainableAdvisor Agent**: Analyzes products for environmental impact
-- **RecommenderAgent**: Applies intelligent ranking and promotions
-- **Agent-to-Agent Communication**: Orchestrated workflows between specialized agents
+### ✅ **Required Technologies**
+- **☸️ Google Kubernetes Engine (GKE)**: All containerized components deployed on GKE
+- **🤖 Google AI Models**: Gemini 1.5 Flash for natural language sustainability explanations
 
-### 🧠 **Real AI Integration**
-- **Google AI (Gemini 1.5 Flash)**: Natural language sustainability explanations
-- **Dynamic Scoring**: ML-powered sustainability assessment (0-100 scale)
-- **Context-Aware Analysis**: Product-specific environmental impact evaluation
+### ✅ **Optional Technologies Implemented**
+- **🔧 Agent Development Kit (ADK)**: Custom framework for building modular AI agents
+- **🔗 Model Context Protocol (MCP)**: Server deployed on GKE for API communication  
+- **🤝 Agent2Agent (A2A)**: Direct inter-agent communication between SustainableAdvisor and RecommenderAgent
 
-### 🔗 **Seamless Integration**
-- **Model Context Protocol (MCP)**: Connects to existing microservice APIs
-- **Zero Code Changes**: External layer approach preserves original applications
-- **Universal Compatibility**: Works with any e-commerce platform via bookmarklet
+### 🎯 **The "External Brain" Approach**
+- **Zero Code Changes**: Original Online Boutique runs completely unmodified
+- **Containerized Intelligence**: New smart components deployed alongside existing services
+- **API Integration**: MCP server reads existing microservice APIs without touching core code
+- **Universal Widget**: Bookmarklet works on any e-commerce site, not just Online Boutique
 
-### 🎯 **Intelligent Features**
-- **Real-time Analysis**: Instant sustainability scoring for any product catalog
-- **Smart Promotions**: Automatic discounts for eco-friendly choices
-- **Educational Insights**: AI-generated explanations for environmental benefits
-- **Multi-factor Ranking**: Considers sustainability, price, and availability
+## 🛠️ **Technology Stack & Implementation**
 
-## 🛠️ **Technology Stack**
+### **Required Technologies (Hackathon Compliance)**
+- **☸️ Google Kubernetes Engine (GKE)**: Container orchestration and deployment platform
+- **🤖 Google AI Models**: Gemini 1.5 Flash for intelligent sustainability analysis
 
-### **Required Technologies**
-- **☸️ Google Kubernetes Engine (GKE)**: Container orchestration and deployment
-- **🤖 Google AI Models**: Gemini 1.5 Flash for natural language processing
+### **Optional Technologies Successfully Implemented**
+- **🔧 Agent Development Kit (ADK)**: Custom framework for modular agentic AI development
+- **🔗 Model Context Protocol (MCP)**: Server-based API communication with existing microservices  
+- **🤝 Agent2Agent (A2A)**: Direct inter-agent communication protocol for complex workflows
 
-### **Implemented Optional Technologies**
-- **🔧 Agent Development Kit (ADK)**: Custom framework for agentic AI
-- **🔗 Model Context Protocol (MCP)**: API communication with existing services  
-- **🤝 Agent2Agent (A2A)**: Inter-agent communication protocol
-
-### **Core Technologies**
+### **Core Implementation Stack**
 ```bash
-Backend:     Python 3.11, Flask, Google AI SDK
-AI/ML:       Gemini 1.5 Flash, Custom ML scoring algorithms
-Frontend:    Vanilla JavaScript, HTML5, CSS3
-DevOps:      Docker, Kubernetes, Google Cloud Platform
-APIs:        RESTful services, gRPC integration
+Containerization: Docker + Kubernetes on GKE
+Backend:          Python 3.11, Flask, Google AI SDK
+AI/ML:            Gemini 1.5 Flash, Custom sustainability scoring
+Frontend:         Vanilla JavaScript, HTML5, CSS3
+API Integration:  MCP Server, RESTful services
+Deployment:       Kubernetes manifests, ConfigMaps, Services
 ```
 
-## 🚀 **Quick Start**
+## 🚀 **Quick Start: Zero-Touch AI Enhancement**
 
 ### **1. Prerequisites**
 ```bash
 # Ensure you have access to:
 - Google Kubernetes Engine cluster
-- Google AI API key
+- Google AI API key for Gemini 1.5 Flash
 - kubectl configured for your cluster
 ```
 
-### **2. One-Command Deployment**
+### **2. Deploy the External AI Brain**
 ```bash
-# Clone repository
+# Clone the external brain components
 git clone https://github.com/mariafiorio/sustainable-shopping-advisor.git
 cd sustainable-shopping-advisor
 
 # Set your Google AI API key
 export GOOGLE_API_KEY="your-google-ai-key-here"
 
-# Deploy everything (Online Boutique + AI Layer)
+# Deploy AI components alongside existing Online Boutique
 ./scripts/deploy.sh
 ```
 
-### **3. Try the Demo**
-1. **Visit the Widget Demo**: http://35.225.28.200
-2. **Add Bookmarklet**: Drag the bookmarklet to your browser favorites
-3. **Visit any e-commerce site**: Try it on our enhanced Online Boutique
-4. **Click the bookmarklet**: Watch AI sustainability analysis appear!
+### **3. Experience the Enhancement**
+1. **Visit Widget Demo**: http://35.225.28.200
+2. **Get Bookmarklet**: Drag the bookmarklet to your browser favorites
+3. **Test on Original Boutique**: http://34.69.27.233 (untouched codebase)
+4. **Try on Any Site**: Click bookmarklet on any e-commerce website!
+
+### **4. Verify Zero-Touch Integration**
+- Original Online Boutique runs exactly as before
+- New AI capabilities accessed through external widget
+- No modifications to existing microservice code
+- Smart insights delivered through MCP API bridge
 
 ## 🎯 **Agent Development Kit (ADK) Framework**
 
@@ -355,24 +358,65 @@ sustainable-shopping-advisor/
 └── 📋 README.md                         # Project documentation
 ```
 
-## 🏆 **Hackathon Achievements**
+## 🏆 **GKE Turns 10 Hackathon Submission**
+
+### **📋 Project Summary**
+**Sustainable Shopping Advisor** transforms the existing Online Boutique microservices application with intelligent sustainability insights through an "external brain" approach. Built entirely as containerized components that enhance the original app without touching its codebase.
+
+**Key Innovation**: Zero-code enhancement using agentic AI architecture where smart agents communicate via A2A protocol and access existing APIs through MCP server integration.
 
 ### **✅ Requirements Fulfilled**
 
 | Requirement | Implementation | Status |
 |-------------|----------------|--------|
-| **GKE Deployment** | Production cluster with auto-scaling | ✅ Complete |
-| **Google AI Integration** | Gemini 1.5 Flash with real API | ✅ Complete |
-| **Agent Development Kit** | Custom ADK framework | ✅ Complete |
-| **Model Context Protocol** | MCP client for API integration | ✅ Complete |
-| **Agent2Agent Protocol** | Inter-agent communication | ✅ Complete |
-| **Microservice Enhancement** | External AI layer (zero code changes) | ✅ Complete |
+| **Enhance Existing Microservice** | Online Boutique + External AI Brain | ✅ Complete |
+| **Zero Code Changes** | Original app completely untouched | ✅ Complete |
+| **GKE Deployment** | All containers deployed on GKE cluster | ✅ Complete |
+| **Google AI Integration** | Gemini 1.5 Flash with real API calls | ✅ Complete |
+| **Agent Development Kit** | Custom ADK framework implemented | ✅ Complete |
+| **Model Context Protocol** | MCP server for API communication | ✅ Complete |
+| **Agent2Agent Protocol** | A2A communication between agents | ✅ Complete |
 
-### **🎯 Innovation Highlights**
-- **🏗️ Modular ADK Framework**: Reusable foundation for any AI agent development
-- **🌍 Universal E-commerce Integration**: Works with any online store via bookmarklet
-- **🤖 Real-time AI Analysis**: Gemini-powered sustainability insights
-- **📊 Production-Ready Architecture**: Kubernetes-native with monitoring & health checks
+### **🎯 Technologies Leveraged**
+- **Required**: ☸️ GKE + 🤖 Google AI (Gemini 1.5 Flash)
+- **Optional**: 🔧 ADK + 🔗 MCP + 🤝 A2A protocols
+- **Enhancement**: Universal bookmarklet works on any e-commerce site
+
+### **� Data Sources & Findings**
+- **Product Data**: Real-time access via Online Boutique ProductCatalog API
+- **Sustainability Metrics**: Custom ML scoring algorithm (material, production, transport impact)
+- **AI Insights**: Gemini-generated explanations for environmental benefits
+- **Learning**: MCP protocol enables seamless integration without code modifications
+
+### **📊 Architecture Innovation**
+Built as containerized "external brain" that reads existing APIs, processes with AI agents, and delivers insights through universal widget - proving microservices can gain intelligence without architectural changes.
+
+## 🎮 **For Judges: Live Testing Guide**
+
+### **🔗 Hosted Project URLs**
+- **Main Demo**: http://35.225.28.200 (Widget interface + bookmarklet)
+- **Original App**: http://34.69.27.233 (Untouched Online Boutique)
+- **API Endpoints**: 
+  - SustainableAdvisor: http://34.173.133.122/health
+  - RecommenderAgent: http://34.44.25.111/health
+
+### **⚡ Quick Test Scenarios**
+1. **Zero-Touch Verification**: Compare original boutique vs enhanced experience
+2. **Universal Widget**: Test bookmarklet on any e-commerce website
+3. **Agent Communication**: Observe A2A protocol in action through API responses
+4. **Real-time AI**: See Gemini-powered sustainability explanations
+
+### **🧪 Technical Validation**
+```bash
+# Test MCP server integration
+curl http://34.173.133.122/recommendations
+
+# Verify A2A communication
+curl http://34.44.25.111/rank -X POST -H "Content-Type: application/json" -d '{"products":[]}'
+
+# Check containerized deployment
+kubectl get pods -l app=sustainable-advisor
+```
 
 ## 🤝 **Contributing**
 
@@ -409,17 +453,21 @@ class MyNewAgent(BaseAgent):
         # Implement your agent logic
         return {'result': 'success'}
 ```
-## 📞 **Contact & Demo**
+## 📞 **Hackathon Submission Details**
 
 - **👩‍💻 Developer**: Maria Fiorio
-- **🌐 Live Demo**: http://35.225.28.200
-- **📊 API Playground**: http://34.173.133.122
-- **📧 Contact**: [GitHub Profile](https://github.com/mariafiorio)
+- **� Event**: GKE Turns 10 Hackathon 2025
+- **�🌐 Live Demo**: http://35.225.28.200
+- **📊 API Health**: http://34.173.133.122/health
+- **📧 GitHub**: [github.com/mariafiorio](https://github.com/mariafiorio)
+- **🏗️ Repository**: [sustainable-shopping-advisor](https://github.com/mariafiorio/sustainable-shopping-advisor)
 
 ---
 
 <div align="center">
 
-![Built for GKE 10th Anniversary](https://img.shields.io/badge/Built_for-GKE_10th_Anniversary-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
+![Built for GKE 10th Anniversary](https://img.shields.io/badge/Built_for-GKE_Turns_10_Hackathon-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
+![Zero Code Changes](https://img.shields.io/badge/Zero_Code_Changes-External_Brain_Approach-FF6B6B?style=for-the-badge)
+![Agentic AI](https://img.shields.io/badge/Agentic_AI-ADK_MCP_A2A-4ECDC4?style=for-the-badge)
 
 </div>
