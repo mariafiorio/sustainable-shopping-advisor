@@ -129,7 +129,7 @@ data:
                 <h1>🌱 Sustainable Shopping Advisor</h1>
                 <p><strong>Agentic AI System for Intelligent E-commerce Recommendations</strong></p>
                 <p>Built with MCP (Model Context Protocol) and A2A (Agent-to-Agent) Communication</p>
-                <p><em>Google Cloud Hackathon 2025 - Live Demo</em></p>
+                <p><em>GKE Turns 10 Hackathon 2025 - Live Demo</em></p>
             </div>
             
             <div class="demo-section">
@@ -249,13 +249,56 @@ data:
     </body>
     </html>
   bookmarklet.js: |
-    // Sustainable Shopping Widget Bookmarklet
+    // 🌱 Enhanced Sustainable Shopping Widget - Agentic AI Demo
     (function() {
         // Prevent multiple instances
-        if (window.sustainableWidgetActive) return;
+        if (window.sustainableWidgetActive) {
+            const existing = document.getElementById('sustainable-shopping-widget');
+            if (existing) existing.remove();
+        }
         window.sustainableWidgetActive = true;
         
-        // Create widget container
+        // Enhanced CSS animations and styles
+        const styles = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes bounce {
+                0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+                40%, 43% { transform: translateY(-10px); }
+                70% { transform: translateY(-5px); }
+            }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            @keyframes fadeInUp {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            #sustainable-shopping-widget {
+                animation: slideInRight 0.6s ease-out;
+            }
+            .widget-loading {
+                animation: pulse 2s infinite;
+            }
+            .widget-item {
+                animation: fadeInUp 0.5s ease-out forwards;
+                opacity: 0;
+            }
+            .widget-score {
+                animation: bounce 1s ease-in-out;
+            }
+        `;
+        
+        // Inject styles
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = styles;
+        document.head.appendChild(styleSheet);
+        
+        // Create enhanced widget container
         const widget = document.createElement('div');
         widget.id = 'sustainable-shopping-widget';
         widget.innerHTML = `
@@ -263,63 +306,230 @@ data:
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                width: 320px;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                padding: 20px;
-                font-family: system-ui, sans-serif;
+                width: 380px;
+                background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(248,250,252,0.95));
+                backdrop-filter: blur(20px);
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.3);
+                padding: 25px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
                 z-index: 99999;
-                color: #333;
-                border: 1px solid rgba(255,255,255,0.3);
+                color: #1a202c;
+                border: 1px solid rgba(255,255,255,0.4);
+                transition: all 0.3s ease;
             ">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h3 style="margin: 0; color: #2e8b57; font-size: 16px;">🌱 Sustainable Shopping</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="font-size: 24px; animation: bounce 2s infinite;">🌱</div>
+                        <div>
+                            <h3 style="margin: 0; color: #2d5016; font-size: 18px; font-weight: 700;">Sustainable AI Advisor</h3>
+                            <div style="font-size: 11px; color: #4a5568; margin-top: 2px;">Smart Sustainability Analytics</div>
+                        </div>
+                    </div>
                     <button onclick="this.parentElement.parentElement.parentElement.remove(); window.sustainableWidgetActive=false;" 
-                            style="background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
+                            style="
+                                background: rgba(239,68,68,0.1); 
+                                border: none; 
+                                width: 32px; 
+                                height: 32px; 
+                                border-radius: 50%; 
+                                font-size: 16px; 
+                                cursor: pointer; 
+                                color: #dc2626;
+                                transition: all 0.2s;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            "
+                            onmouseover="this.style.background='rgba(239,68,68,0.2)'"
+                            onmouseout="this.style.background='rgba(239,68,68,0.1)'">✕</button>
                 </div>
                 
-                <div id="sustainable-content" style="font-size: 14px; line-height: 1.4;">
-                    <div style="text-align: center; padding: 20px;">
-                        <div style="font-size: 24px; margin-bottom: 10px;">🔄</div>
-                        <div>Analyzing sustainability...</div>
+                <div id="sustainable-content" style="font-size: 14px; line-height: 1.5;">
+                    <div class="widget-loading" style="text-align: center; padding: 30px 20px;">
+                        <div style="
+                            width: 60px; 
+                            height: 60px; 
+                            border: 4px solid #e2e8f0; 
+                            border-top: 4px solid #059669; 
+                            border-radius: 50%; 
+                            margin: 0 auto 20px; 
+                            animation: spin 1s linear infinite;
+                        "></div>
+                        <div style="color: #4a5568; font-weight: 500;">🤖 Analyzing Sustainability...</div>
+                        <div style="color: #6b7280; font-size: 12px; margin-top: 8px;">Smart product evaluation in progress</div>
                     </div>
                 </div>
             </div>
+            
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
         `;
         
         document.body.appendChild(widget);
         
-        // Simulate analysis and recommendations
+        // Enhanced AI analysis simulation with realistic timing
         setTimeout(() => {
             const content = document.getElementById('sustainable-content');
             content.innerHTML = `
-                <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
-                    <div style="font-size: 18px; font-weight: bold;">⭐ Sustainability Score: 85/100</div>
-                    <div style="font-size: 12px; opacity: 0.9; margin-top: 5px;">Agentic AI Analysis Complete</div>
+                <div class="widget-score" style="
+                    background: linear-gradient(135deg, #059669, #047857); 
+                    color: white; 
+                    padding: 20px; 
+                    border-radius: 15px; 
+                    margin-bottom: 20px; 
+                    text-align: center;
+                    box-shadow: 0 10px 25px rgba(5,150,105,0.3);
+                ">
+                    <div style="font-size: 22px; font-weight: 700; margin-bottom: 5px;">⭐ Sustainability Score: 87/100</div>
+                    <div style="font-size: 12px; opacity: 0.9;">🤖 Smart Analysis Complete</div>
                 </div>
                 
-                <div style="margin-bottom: 15px;">
-                    <div style="font-weight: bold; color: #2e8b57; margin-bottom: 8px;">🎯 Sustainable Alternatives:</div>
-                    <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4CAF50;">
-                        <div style="font-weight: bold;">🕯️ Bamboo Glass Jar</div>
-                        <div style="font-size: 12px; color: #666;">15% off • Carbon score: 15/100</div>
+                <div style="margin-bottom: 20px;">
+                    <div style="
+                        display: flex; 
+                        align-items: center; 
+                        gap: 10px; 
+                        color: #2d5016; 
+                        font-weight: 600; 
+                        margin-bottom: 12px;
+                        font-size: 15px;
+                    ">
+                        🎯 <span>AI-Recommended Alternatives</span>
                     </div>
-                    <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #4CAF50;">
-                        <div style="font-weight: bold;">☕ Ceramic Mug</div>
-                        <div style="font-size: 12px; color: #666;">10% off • Locally made</div>
+                    
+                    <div class="widget-item" style="
+                        background: linear-gradient(145deg, #f0fdf4, #dcfce7); 
+                        padding: 15px; 
+                        border-radius: 12px; 
+                        margin-bottom: 12px; 
+                        border-left: 4px solid #059669;
+                        transition: transform 0.2s;
+                        animation-delay: 0.1s;
+                    " onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-weight: 600; color: #1a202c; margin-bottom: 4px;">🕯️ Bamboo Glass Jar</div>
+                                <div style="font-size: 12px; color: #059669; font-weight: 500;">15% OFF • Carbon Impact: -60%</div>
+                            </div>
+                            <div style="
+                                background: #059669; 
+                                color: white; 
+                                padding: 4px 8px; 
+                                border-radius: 20px; 
+                                font-size: 11px; 
+                                font-weight: 600;
+                            ">TOP</div>
+                        </div>
+                    </div>
+                    
+                    <div class="widget-item" style="
+                        background: linear-gradient(145deg, #f0fdf4, #dcfce7); 
+                        padding: 15px; 
+                        border-radius: 12px; 
+                        margin-bottom: 12px; 
+                        border-left: 4px solid #059669;
+                        transition: transform 0.2s;
+                        animation-delay: 0.2s;
+                    " onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-weight: 600; color: #1a202c; margin-bottom: 4px;">☕ Ceramic Coffee Mug</div>
+                                <div style="font-size: 12px; color: #059669; font-weight: 500;">10% OFF • Local Production</div>
+                            </div>
+                            <div style="
+                                background: #22c55e; 
+                                color: white; 
+                                padding: 4px 8px; 
+                                border-radius: 20px; 
+                                font-size: 11px; 
+                                font-weight: 600;
+                            ">ECO</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div style="background: #e8f5e8; padding: 10px; border-radius: 8px; font-size: 12px;">
-                    <div style="font-weight: bold; color: #2e8b57; margin-bottom: 5px;">🤖 AI Architecture:</div>
-                    <div>• MCP: Product data collection</div>
-                    <div>• A2A: Agent collaboration</div>
-                    <div>• Real-time sustainability scoring</div>
+                <div style="
+                    text-align: center; 
+                    margin-top: 15px; 
+                    padding-top: 15px; 
+                    border-top: 1px solid #e5e7eb;
+                ">
+                    <div style="font-size: 11px; color: #9ca3af; font-weight: 500;">
+                        Powered by Google Cloud • Real-time AI Analysis
+                    </div>
                 </div>
             `;
-        }, 2000);
+            
+            // Animate items in sequence
+            const items = document.querySelectorAll('.widget-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                }, index * 200);
+            });
+            
+        }, 2500);
         
-        console.log('🌱 Sustainable Shopping Widget loaded with Agentic AI');
+        // Add dragging functionality
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+        
+        const dragItem = widget.querySelector('div');
+        
+        dragItem.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+        
+        function dragStart(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            
+            if (e.target === dragItem || dragItem.contains(e.target)) {
+                isDragging = true;
+                dragItem.style.cursor = 'grabbing';
+            }
+        }
+        
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                
+                xOffset = currentX;
+                yOffset = currentY;
+                
+                setTranslate(currentX, currentY, dragItem);
+            }
+        }
+        
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+            dragItem.style.cursor = 'grab';
+        }
+        
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+        }
+        
+        // Add grab cursor
+        dragItem.style.cursor = 'grab';
+        
+        console.log('🌱 Sustainable Shopping Widget loaded successfully!');
+        console.log('🤖 Smart sustainability analysis enabled');
+        
     })();
