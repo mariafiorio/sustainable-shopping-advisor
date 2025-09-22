@@ -245,22 +245,6 @@ user_request → SustainableAdvisor → RecommenderAgent → final_recommendatio
 3. Result: Top 3 sustainable products with explanations + discounts
 ```
 
-## 📊 **Demo Results**
-
-### **Sample Analysis: Online Boutique Catalog**
-
-| Product | Sustainability Score | AI Explanation | Promotion |
-|---------|---------------------|----------------|-----------|
-| 🎍 **Bamboo Glass Jar** | **100/100** | *Renewable bamboo material with minimal processing and biodegradable packaging* | **15% OFF** |
-| ☕ **Coffee Mug** | **100/100** | *Recyclable ceramic construction with local production reducing transport emissions* | **15% OFF** |
-| 🕯️ **Handmade Candle** | **90/100** | *Locally crafted with natural wax, supporting small-scale sustainable production* | **15% OFF** |
-
-### **Performance Metrics**
-- ⚡ **Response Time**: <2 seconds for full analysis
-- 🎯 **Accuracy**: 96.7/100 average sustainability scoring
-- 🌍 **Impact**: Promotes eco-friendly choices with measurable environmental benefits
-- 🔄 **Scalability**: Handles any product catalog size via Kubernetes autoscaling
-
 ## 🌍 **Environmental Impact**
 
 ### **Measurable Benefits**
@@ -331,31 +315,6 @@ python main.py
 # - MCP client integration
 # - Agent-to-Agent communication
 # - API response accuracy
-```
-
-## 📚 **Project Structure**
-
-```
-sustainable-shopping-advisor/
-├── 🎯 src/adk/                          # Agent Development Kit Framework
-│   ├── agent_base.py                   # BaseAgent foundation class
-│   ├── sustainable_advisor_adk.py      # Sustainability analysis agent
-│   ├── recommender_agent_adk.py        # Product recommendation agent
-│   └── test_adk.py                     # Comprehensive test suite
-├── 🌱 src/sustainable-advisor/          # Main agent implementation
-│   ├── mcp_client.py                   # Model Context Protocol integration
-│   ├── requirements.txt                # Python dependencies
-│   └── Dockerfile                      # Container specification
-├── 🎯 src/recommender-agent/            # Recommendation service
-├── ☸️ k8s/                              # Kubernetes manifests
-│   ├── namespace.yaml                  # Isolated namespace
-│   ├── sustainable-advisor.yaml        # Main agent deployment
-│   └── recommender-agent.yaml          # Recommender deployment
-├── 🚀 scripts/
-│   └── deploy.sh                       # One-command deployment
-├── 📚 docs/                             # Technical documentation
-├── 🎬 main.py                           # Interactive demo
-└── 📋 README.md                         # Project documentation
 ```
 
 ## 🏆 **GKE Turns 10 Hackathon Submission**
