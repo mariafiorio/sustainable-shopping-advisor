@@ -159,12 +159,6 @@ data:
                         <div class="status-indicator status-checking" id="recommender-status">Checking...</div>
                         <p><small>Provides intelligent ranking based on promotions and preferences</small></p>
                     </div>
-                    <div class="status-card">
-                        <h3>🏪 Online Boutique</h3>
-                        <p>E-commerce demo site on GKE</p>
-                        <div class="status-indicator status-checking" id="boutique-status">Checking...</div>
-                        <p><small>Base microservices platform for product catalog</small></p>
-                    </div>
                 </div>
             </div>
             
@@ -240,9 +234,8 @@ data:
             
             // Check all services
             async function checkAllServices() {
-                checkServiceHealth('/api/health', 'advisor-status');
-                checkServiceHealth('/recommender/health', 'recommender-status');
-                checkServiceHealth('/boutique', 'boutique-status');
+                checkServiceHealth('http://34.173.133.122/health', 'advisor-status');
+                checkServiceHealth('http://34.44.25.111/health', 'recommender-status');
             }
             
             // Run health checks on page load
